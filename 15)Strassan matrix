@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void addMatrix(int A[2][2], int B[2][2], int result[2][2]) {
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
+            result[i][j] = A[i][j] + B[i][j];
+}
+
+void subtractMatrix(int A[2][2], int B[2][2], int result[2][2]) {
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
+            result[i][j] = A[i][j] - B[i][j];
+}
+
+void strassenMultiplication(int A[2][2], int B[2][2], int C[2][2]) {
+    int P1, P2, P3, P4, P5, P6, P7;
+    int A11 = A[0][0], A12 = A[0][1], A21 = A[1][0], A22 = A[1][1];
+    int B11 = B[0][0], B12 = B[0][1], B21 = B[1][0], B22 = B[1][1];
+
+    P1 = A11 * (B12 - B22);
+    P2 = (A11 + A12) * B22;
+    P3 = (A21 + A22) * B11;
+    P4 = A22 * (B21 - B11);
+    P5 = (A11 + A22) * (B11 + B22);
+    P6 = (A12 - A22) * (B21 + B22);
+    P7 = (A11 - A21) * (B11 + B12);
+
+    C[0][0] = P5 + P4 - P2 + P6; 
+    C[0][1] = P1 + P2;           
+    C[1][0] = P3 + P4;           
+    C[1][1] = P1 + P5 - P3 - P7; 
+}
+
+int main() {
+    int A[2][2], B[2][2], C[2][2];
+    printf("Enter the elements of 2x2 matrix A:\n");
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
+            scanf("%d", &A[i][j]);
+    printf("Enter the elements of 2x2 matrix B:\n");
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
+            scanf("%d", &B[i][j]);
+    strassenMultiplication(A, B, C);
+    printf("Resultant matrix after Strassen's multiplication:\n");
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            printf("%d ", C[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
